@@ -1,8 +1,14 @@
+import "dotenv/config";
 import "express-async-errors";
+import { createServer } from "http";
 import { app } from "./app";
+import { initSocket } from "./socket";
 
 const PORT = process.env.PORT ? parseInt(process.env.PORT) : 4000;
 
-app.listen(PORT, () => {
+const httpServer = createServer(app);
+initSocket(httpServer);
+
+httpServer.listen(PORT, () => {
   console.log(`API server running on http://localhost:${PORT}`);
 });
